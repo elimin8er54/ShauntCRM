@@ -1,8 +1,12 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-import { Request } from "express"
+import type { Request } from "express"
 import {Client,IClient} from "./schemas/Client"
 const ObjectID = require('mongodb').ObjectID;
+
+interface ClientInsert{
+clientName:String;
+}
 
 /**
  * Callback for inserting a new client
@@ -17,10 +21,10 @@ const ObjectID = require('mongodb').ObjectID;
  * @param {Request} req - The request object from the client.
  * @param {createDealCallback} callback - A callback to run.
  */
-export const insertClient = async(req:Request,result:(data:{success:boolean})=>void) =>{
+export const insertClient = async({clientName}:ClientInsert,result:(data:{success:boolean})=>void) =>{
 
-const client: IClient = new Client({ clientName: req.body.clientName,clientHistory:[{asd:"asd"}] });
-  client.save(function (err) {
+const client: IClient = new Client({ clientName: clientName,clientHistory:[{asd:"asd"}] });
+  client.save( (err) => {
     if (err) return console.error(err);
    
   });
@@ -41,7 +45,7 @@ const client: IClient = new Client({ clientName: req.body.clientName,clientHisto
  * @param {Request} req - The request object from the client.
  * @param {getClientCallback} callback - A callback to run.
  */
- export const getClients = async(req:Request,result:(data:{success:boolean,values:{}})=>void) =>{
+ export const getClients = async(result:(data:{success:boolean,values:{}})=>void) =>{
   
 
   const values = await Client.find({})

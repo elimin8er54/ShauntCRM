@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 import  {ObjectID} from "mongodb";
 
 export enum Action {
-    UPDATED = "UPDATED",
-    DELETED = "DELETED",
-    INSERTED = "INSERTED"
+    INSERTED = 0,
+    UPDATED = 1,
+    DELETED =2,
+    
 }
 
 //This is the schema used in the array @see clientHistory value for the @see clientSchema Schema

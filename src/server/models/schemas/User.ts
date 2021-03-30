@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
+import type { Schema,Model,Document }  from "mongoose";
 import  {ObjectID} from "mongodb";
 import {historySchema} from "./ReusedEnums";
 
+export interface IUser extends Document  {
+  userUsername:string;
+}
 
-//_id also stored in an array @see Team.ts called teamUserID
-//_id also stored in an array @see Client.ts called clientUserID
-const userSchema = new mongoose.Schema({
+const userSchema:Schema = new mongoose.Schema({
     userName: {
-        type: String,
-        required: true
+        type: String
       },
       userUsername: {
         type: String,
@@ -40,5 +41,5 @@ const userSchema = new mongoose.Schema({
     }
   });
 
-  export const User = mongoose.model('User', userSchema);
+  export const UserModel:Model<IUser> = mongoose.model('User', userSchema);
 

@@ -3,14 +3,7 @@ import type { Schema,Model,Document }  from "mongoose";
 import {ObjectID} from "mongodb";
 import {historySchema} from "./ReusedEnums";
 
-export enum ClientStage {
-    NOTHING = "NOTHING",
-    CONTACTED = "CONTACTED",
-    LEAD = "LEAD",
-    PENDING = "PENDING",
-    FINAL = "FINAL",
-    NULL = "NULL"
-}
+
 export interface IClient extends Document {
   email: string;
   firstName: string;
@@ -32,12 +25,7 @@ const clientSchema:Schema = new mongoose.Schema({
       },
     clientUserID: [ObjectID],
 
-    clientStage:{
-        type:String,
-        required:true,
-        enum:[ClientStage],
-        default:ClientStage.NOTHING
-    },
+
     clientHistory: {
         type:[historySchema],
         validate: (v:[]) => v == null || v.length > 0
