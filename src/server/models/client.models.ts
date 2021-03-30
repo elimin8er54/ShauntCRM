@@ -1,8 +1,5 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-import type { Request } from "express"
 import {Client,IClient} from "./schemas/Client"
-const ObjectID = require('mongodb').ObjectID;
 
 interface ClientInsert{
 clientName:String;

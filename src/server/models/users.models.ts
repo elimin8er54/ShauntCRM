@@ -1,12 +1,9 @@
 const bcrypt = require("bcryptjs");
-const auth = require("../config/auth.config");
-const jwt = require("jsonwebtoken");
-const ObjectID = require('mongodb').ObjectID;
 import {UserModel,IUser} from "./schemas/User";
 import {createToken} from "../helpers/jwtCreator";
 
 //We can always make a class with a callback for handling what gets sent back to the client.
-//But from what I have learned it may lay lead to issues in the future when we want to do something outside of what the class allows
+//But from what I have learned it may lead to issues in the future when we want to do something outside of what the class allows
 //Remember we are not making a package we are making something from the packages we use.
 
 interface User  {

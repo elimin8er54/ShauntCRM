@@ -1,23 +1,9 @@
-const { verifyToken, passedCheck } = require("../middleware/authJwt");
-const { adminCheck, passedAdminCheck } = require("../middleware/adminCheck");
 const user = require("../controllers/user.controller");
 import type { MongoClient } from 'mongodb';
 import type { Application } from 'express';
-const { photoHeadshot } = require('../helpers/photoengine')
-
-const headshot = photoHeadshot();
 
 module.exports = function (app: Application, client: MongoClient) {
-
-  app.post("/api/signin", user.signin(client));
-  app.post("/api/deleteagent", verifyToken, adminCheck(client), user.deleteagents(client));
-  app.get("/api/getaboutagents", user.getaboutagents(client));
-  app.post("/api/getagents", verifyToken, adminCheck(client), user.getagents(client));
-  app.post("/api/getagentfull", verifyToken, adminCheck(client), user.getagentfull(client));
-  app.post("/api/updateagentfull", verifyToken, adminCheck(client), headshot.single('src'), user.updateagent(client));
-  app.post("/api/jwtauth", verifyToken, passedCheck);
-  app.post("/api/admincheck", verifyToken, adminCheck(client), passedAdminCheck);
-  app.post("/api/getcurrentuser", verifyToken, user.getcurrentuser(client));
-
+  app.post("/api/createuser", user.signIn(client));
+  app.post("/api/signin", user.createUser(client));
 };
 
