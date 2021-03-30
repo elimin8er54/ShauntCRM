@@ -1,0 +1,134 @@
+$primaryColor: rgb(194, 12, 12);
+$containerWidth: 1200px;
+$textColor: rgb(95, 95, 95);
+$minContainerHeight: 1400px;
+$mainShadow: 0 4px 8px 0 rgba(158, 158, 158, 0.2),
+  0 6px 20px 0 rgba(168, 168, 168, 0.19);
+
+body {
+  margin: 0;
+}
+
+ul {
+  display: block;
+  list-style-type: disc;
+  margin: 0;
+  padding: 0;
+  display: block;
+  list-style-type: disc;
+}
+
+h3 {
+  color: $textColor;
+}
+
+.mainButton {
+  background-color: $primaryColor;
+}
+
+.mainContainer {
+  margin: auto;
+  width: 50%;
+  width: $containerWidth;
+  text-align: center;
+  align-content: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.loginSeparator {
+  margin-top: 20px;
+}
+
+.loginTitle {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: monospace;
+}
+
+.loginWidth {
+  width: 400px;
+  display: inline-block;
+  box-shadow: $mainShadow;
+  border: 1px solid rgb(153, 153, 153);
+  padding: 20px;
+  color: $textColor;
+}
+
+.dashSeperator {
+  background-color: rgb(199, 199, 199);
+  height: 1px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.notFound {
+  margin-top: 100px;
+}
+
+.body {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+ul {
+  nav {
+    li a:hover {
+      width: 100%;
+      height: 2px;
+      background-color: $primaryColor !important;
+    }
+  }
+}
+
+.customFooter {
+  margin: auto;
+  color: white;
+  width: 20%;
+}
+
+.footer {
+  margin: auto;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  background-color: rgb(66, 66, 66);
+}
+
+.nav {
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: $mainShadow;
+  height: 80px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.navCenter {
+  display: inline-block;
+  list-style-type: none;
+  margin-top: 20px;
+  a {
+    color: black !important;
+  }
+  &.active {
+    display: inline;
+    list-style-type: none;
+    border-bottom: 5px solid $primaryColor !important;
+  }
+}
+
+.fadeInSection {
+  opacity: 0;
+  transform: translateX(-15vh);
+  visibility: hidden;
+  transition: opacity 1s ease-out, transform 0.7s ease-out;
+  will-change: opacity, visibility;
+  .isVisible {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+}
