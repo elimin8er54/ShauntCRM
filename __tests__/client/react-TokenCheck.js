@@ -7,12 +7,10 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import axios from "axios";
-import Enzyme from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 
 jest.useFakeTimers();
 jest.mock("axios");
-Enzyme.configure({ adapter: new Adapter() });
+
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target

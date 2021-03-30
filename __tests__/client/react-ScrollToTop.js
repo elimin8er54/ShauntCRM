@@ -12,8 +12,6 @@ import "regenerator-runtime/runtime";
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-import Enzyme from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
 import Header from "../../src/client/components/Header";
 import Footer from "../../src/client/components/Footer";
 import Body from "../../src/client/components/Body";
