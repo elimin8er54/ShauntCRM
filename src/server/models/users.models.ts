@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-import {UserModel,IUser} from "./schemas/User";
+import {UserModel,UserLoginModel,IUser} from "./schemas/User";
 import {createToken} from "../helpers/jwtCreator";
 
 //We can always make a class with a callback for handling what gets sent back to the client.
@@ -31,15 +31,17 @@ export const signIn = async ({username,password}: User, result:(data:{success:bo
   let token = null;
   try {
     //Mongoose types are broken it seens so we have to use find over findOne.
-    const query:Array<IUser> = await UserModel.find({ userUsername:username}).limit(1);
-    const {userPassword,_id} = query[0];
-    if (
-      query.length &&
-      bcrypt.compareSync(password,userPassword))
-     {
+    const query:Array<IUser> = await UserModel.find({ userUsername:username, isRemoved: {  $eq: false  }}).limit(1);
+  
+    if (query.length ){
+      const {userPassword,_id} = query[0];
+      if( bcrypt.compareSync(password,userPassword)){
           success = true;
           message = "You have logged in! If everything worked correctly you shouldn't even see this message!";
           token = createToken(_id);
+      }
+    } else {
+      message = "Your username or password is incorrect.";
     }
   } catch (err) {
     message = "There was an error when trying to validate the username and password";
@@ -67,9 +69,10 @@ export const createUser = async ({username,password}: User, result:(data:{succes
   let message = "";
   let token = null;
   const pwd = bcrypt.hashSync(password, 8);
+
   try {
         //We should change this to async/await with a try catch block instead.
-    const user:IUser = new UserModel({ userName:username.toLocaleLowerCase(),userPassowrd:pwd });
+    const user:IUser = new UserModel({ userUsername:username.toLocaleLowerCase(),userPassowrd:pwd });
     user.save( (err,values) =>{
       if (err) { 
         message = "There was an error when trying to create the account";

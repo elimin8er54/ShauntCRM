@@ -4,7 +4,6 @@ import  {ObjectID} from "mongodb";
 import {historySchema} from "./ReusedEnums";
 
 export interface IUser extends Document  {
-  userUsername:string;
   userPassword:string;
 }
 
@@ -41,12 +40,23 @@ const userSchema:Schema = new mongoose.Schema({
       },
     userHistory: {
         type:[historySchema],
-        required:true
+         validate: (v:[]) => v == null || v.length > 0
     }
+  });
+
+
+  const userLoginSchema:Schema = new mongoose.Schema({
+      userUsername: {
+        type: String,
+        lowercase: true,
+        required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+        minLength:3,
+        maxLength:20
+      }
   });
 
   
 
-
+  export const UserLoginModel:Model<IUser> = mongoose.model('UserLogin', userLoginSchema);
   export const UserModel:Model<IUser> = mongoose.model('User', userSchema);
 

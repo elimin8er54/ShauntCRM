@@ -40,7 +40,7 @@ const TokenCheck: React.FC<Props> = ({ children, redirect, time }) => {
   }, []);
 
   const checkToken = async () => {
-    return await axios({
+    const { data } = await axios({
       url: `/api/jwtauth`,
       method: "POST",
       headers: {
@@ -48,6 +48,10 @@ const TokenCheck: React.FC<Props> = ({ children, redirect, time }) => {
         Authorization: `Bearer  ${localStorage.getItem("token")}`,
       },
     });
+    if (!data.success) {
+      localStorage.removeItem("token");
+      document.location.href = redirect;
+    }
   };
 
   return <>{children}</>;

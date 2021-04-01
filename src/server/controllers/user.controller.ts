@@ -14,19 +14,21 @@ import { Request, Response } from "express"
 exports.signIn = (req: Request, res: Response): void => {
 
     if (!req.body) {
-      res.status(400).send({ message: 'Could not log in' });
+      res.status(400).send({ message: 'You didn\'t send anything' });
     }
 
     // Check database and sign in
-    signIn(req.body, (err: null | { [k: string]: { message: string } }, data: any) => {
+    signIn(req.body, ( data: any) => {
 
-      if (err) {
+      if (!data.success) {
         res.status(500).send({
-          message: err.message || 'Something went wrong',
+         data
         });
-      }
+        console.log(data)
+      } else {
 
       res.json(data);
+      }
     });
   };
 

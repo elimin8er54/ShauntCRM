@@ -25,9 +25,9 @@ const Home = () => {
    */
   const handleLogin = () => {
     axios({
-      url: `/api/jwtauth`,
+      url: `/api/signin`,
       method: "POST",
-      data: { userUsername: username, userPassoword: password },
+      data: { username: username, password: password },
       headers: { "Content-Type": "application/json" },
     }).then((response) => {
       const { data } = response;

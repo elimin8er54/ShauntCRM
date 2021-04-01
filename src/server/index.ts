@@ -29,7 +29,7 @@ client.once('open', function() {
   });
 
 
-  require("./routes/deal.route")(app);
+  require("./routes/client.route")(app);
   require("./routes/user.route")(app);
 
   app.get("*", (req: Request, res: Response) => {
