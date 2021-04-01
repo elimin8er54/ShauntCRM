@@ -29,10 +29,34 @@ const Home = () => {
       method: "POST",
       data: { username: username, password: password },
       headers: { "Content-Type": "application/json" },
-    }).then((response) => {
-      const { data } = response;
-      data.message && setErrorMessage(data.message);
-    });
+    })
+      .then((response) => {
+        const { message } = response.data;
+        //If we log in succesfully this should not even matter.
+        message && setErrorMessage(message);
+      })
+      .catch((error) => {
+        const { message } = error.response.data.data;
+        message && setErrorMessage(message);
+      });
+  };
+
+  const handleCreate = () => {
+    axios({
+      url: `/api/createuser`,
+      method: "POST",
+      data: { username: username, password: password },
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        const { message } = response.data;
+        //If we log in succesfully this should not even matter.
+        message && setErrorMessage(message);
+      })
+      .catch((error) => {
+        const { message } = error.response.data.data;
+        message && setErrorMessage(message);
+      });
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +125,15 @@ const Home = () => {
             color="secondary"
           >
             Submit
+          </Button>
+
+          <Button
+            onClick={handleCreate}
+            className={styles.mainButton}
+            variant="contained"
+            color="secondary"
+          >
+            Create Account
           </Button>
         </div>
       </span>

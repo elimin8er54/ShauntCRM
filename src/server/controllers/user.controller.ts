@@ -20,11 +20,12 @@ exports.signIn = (req: Request, res: Response): void => {
     // Check database and sign in
     signIn(req.body, ( data: any) => {
 
+
       if (!data.success) {
-        res.status(500).send({
+        res.status(data.errorCode).send({
          data
         });
-        console.log(data)
+       
       } else {
 
       res.json(data);

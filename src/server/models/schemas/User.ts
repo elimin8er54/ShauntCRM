@@ -36,7 +36,13 @@ const userSchema:Schema = new mongoose.Schema({
       //This is the ID of the super owner. This ID will be its own _id if it is the master account
       teamMasterID: {
         type: ObjectID,
-        required: true
+        // @ts-ignore
+        required: function() {
+          // @ts-ignore
+          return typeof this.teamMasterID === 'undefined' || (this.teamMasterID != null && typeof this.teamMasterID != 'string')
+        }
+    
+       
       },
     userHistory: {
         type:[historySchema],
@@ -45,18 +51,8 @@ const userSchema:Schema = new mongoose.Schema({
   });
 
 
-  const userLoginSchema:Schema = new mongoose.Schema({
-      userUsername: {
-        type: String,
-        lowercase: true,
-        required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
-        minLength:3,
-        maxLength:20
-      }
-  });
-
   
 
-  export const UserLoginModel:Model<IUser> = mongoose.model('UserLogin', userLoginSchema);
+
   export const UserModel:Model<IUser> = mongoose.model('User', userSchema);
 
