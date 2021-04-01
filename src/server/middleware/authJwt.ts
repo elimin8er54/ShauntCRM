@@ -4,11 +4,13 @@ const auth = require("../config/auth.config");
 import { Response, Request, NextFunction } from 'express';
 
 interface Token extends Request{
-  //You may think it's better to append to the body property but some plugins override the body 
+  //You may think it's better to append values to the body field but some plugins override the body 
   //So you would lose any changes you want to pass through the middleware
-  //This is why we use a custom property instead of the default body property
+  //This is why we use a custom field instead of the default body field
   custom: { 
     token: string,
+    //Sometimes it's better to just get the userID from the token instead of wasting resources with a query.
+    //So we pass the user_id as well along the middleware
     user_id:string 
   }
 }
@@ -66,7 +68,7 @@ const EXPIRE_IN = 60 * 15;
  * @param {Request} req - The request object from the user.
  * @param {Response} res - The response object to send to the user.
  */
-exports.passedCheck = (req: Request, res: Response) => {
-  const {token} = req.body;
+exports.passedCheck = (req: Token, res: Response) => {
+  const {token} = req.custom;
   res.json({ success: true,token:token});
 }

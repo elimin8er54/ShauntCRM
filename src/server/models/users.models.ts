@@ -19,7 +19,7 @@ interface User  {
  */
 
 /**
- * Update or Insert a user, then pass the results to a callback function.
+ * Validate if a user exists and then pass a token and status to a callback
  *
  * @param {Request} req - The request object from the user.
  * @param {updateUserCallback} callback - A callback to run.
@@ -30,21 +30,19 @@ export const signIn = async ({username,password}: User, result:(data:{success:bo
   let message = "";
   let token = null;
   try {
-    const user:IUser = new UserModel({ userName:username,userPassowrd:password });
-    //We should change this to async/await with a try catch block instead.
-    user.save( (err,values) =>{
-      if (err) { 
-        message = "There was an error when trying to validate the username and password";
-        return console.error(err) } else {
+    //Mongoose types are broken it seens so we have to use find over findOne.
+    const query:Array<IUser> = await UserModel.find({ userUsername:username}).limit(1);
+    const {userPassword,_id} = query[0];
+    if (
+      query.length &&
+      bcrypt.compareSync(password,userPassword))
+     {
           success = true;
           message = "You have logged in! If everything worked correctly you shouldn't even see this message!";
-          token = createToken(values._id);
-        };
-     
-    });
-  
+          token = createToken(_id);
+    }
   } catch (err) {
-    message = "There was an error on the server.";
+    message = "There was an error when trying to validate the username and password";
     console.log(err);
   }
   result( {success:success,message:message,token:token})
@@ -68,8 +66,10 @@ export const createUser = async ({username,password}: User, result:(data:{succes
   let success = false;
   let message = "";
   let token = null;
+  const pwd = bcrypt.hashSync(password, 8);
   try {
-    const user:IUser = new UserModel({ userName:username,userPassowrd:password });
+        //We should change this to async/await with a try catch block instead.
+    const user:IUser = new UserModel({ userName:username.toLocaleLowerCase(),userPassowrd:pwd });
     user.save( (err,values) =>{
       if (err) { 
         message = "There was an error when trying to create the account";

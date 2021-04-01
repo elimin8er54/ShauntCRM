@@ -25,10 +25,10 @@ const clientSchema:Schema = new mongoose.Schema({
       },
     clientUserID: [ObjectID],
 
-
+    
     clientHistory: {
-        type:[historySchema],
-        validate: (v:[]) => v == null || v.length > 0
+    type:[historySchema],
+    validate: (v:[]) => v == null || v.length > 0
     }
   });
 

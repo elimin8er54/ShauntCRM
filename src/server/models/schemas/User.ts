@@ -5,6 +5,7 @@ import {historySchema} from "./ReusedEnums";
 
 export interface IUser extends Document  {
   userUsername:string;
+  userPassword:string;
 }
 
 const userSchema:Schema = new mongoose.Schema({
@@ -13,8 +14,8 @@ const userSchema:Schema = new mongoose.Schema({
       },
       userUsername: {
         type: String,
-        required: true,
         lowercase: true,
+        required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
         minLength:3,
         maxLength:20
       },
@@ -23,7 +24,10 @@ const userSchema:Schema = new mongoose.Schema({
         required: true
       },
       userPhone:String,
-      userEmail:String,
+      userEmail:{
+        type:String,
+        lowercase: true,
+      },
       userPhotoURL:String,
       userIsRemoved: {
         type: Boolean,
@@ -40,6 +44,9 @@ const userSchema:Schema = new mongoose.Schema({
         required:true
     }
   });
+
+  
+
 
   export const UserModel:Model<IUser> = mongoose.model('User', userSchema);
 

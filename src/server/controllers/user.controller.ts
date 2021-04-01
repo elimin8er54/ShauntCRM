@@ -1,6 +1,7 @@
 const { signIn, createUser } = require('../models/users.models');
 import { Request, Response } from "express"
 
+
 //We still need to leave req as a prameter so express does not think it is Responose instead
 //We use exports as an object over "const exports" just so we can leave the names the same 
 //Since we cannot redeclare block-scoped variables
