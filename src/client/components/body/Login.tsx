@@ -28,7 +28,7 @@ const Home = () => {
       url: `/api/signin`,
       method: "POST",
       data: { username: username, password: password },
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }
     })
       .then((response) => {
         const { message } = response.data;
@@ -46,7 +46,7 @@ const Home = () => {
       url: `/api/createuser`,
       method: "POST",
       data: { username: username, password: password },
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" }
     })
       .then((response) => {
         const { message } = response.data;
@@ -123,8 +123,9 @@ const Home = () => {
             className={styles.mainButton}
             variant="contained"
             color="secondary"
+            id="loginButton"
           >
-            Submit
+            Log In
           </Button>
 
           <Button
@@ -132,6 +133,7 @@ const Home = () => {
             className={styles.mainButton}
             variant="contained"
             color="secondary"
+            id="createButton"
           >
             Create Account
           </Button>
