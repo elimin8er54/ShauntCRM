@@ -1,0 +1,11 @@
+language: node_js
+deploy:
+    provider: codedeploy
+    revision_type: github
+    access_key_id: "REDACTED"
+    secret_access_key: "REDACTED"
+    application: "CRM"
+    deployment_group: "ShauntCRM"
+    region: "us-east-2"
+ on:
+    branch: main
