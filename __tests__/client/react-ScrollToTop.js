@@ -17,7 +17,6 @@ import Footer from "../../src/client/components/Footer";
 import Body from "../../src/client/components/Body";
 
 jest.mock("axios");
-Enzyme.configure({ adapter: new Adapter() });
 let container = null;
 beforeEach(() => {
   // setup a DOM element as a render target
