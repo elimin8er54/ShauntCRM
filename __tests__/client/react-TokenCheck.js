@@ -29,6 +29,7 @@ it("mounts, clicks and waits to test token", async (done) => {
   const data = { data: { success: true } };
 
   axios.mockImplementationOnce(() => Promise.resolve(data));
+
   await act(async () => {
     render(<TokenCheck time={1000}></TokenCheck>, container);
   });

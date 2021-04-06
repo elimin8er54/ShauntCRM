@@ -40,18 +40,24 @@ const TokenCheck: React.FC<Props> = ({ children, redirect, time }) => {
   }, []);
 
   const checkToken = async () => {
-    const { data } = await axios({
-      url: `/api/jwtauth`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer  ${localStorage.getItem("token")}`,
-      },
-    });
-    if (!data.success) {
-      localStorage.removeItem("token");
-      document.location.href = redirect;
+    try {
+      const { data } = await axios({
+        url: `/api/jwtauth`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer  ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!data.success) {
+        localStorage.removeItem("token");
+        document.location.href = redirect;
+      }
+    } catch (err) {
+      throw new Error('Unable to get a token.')
     }
+
   };
 
   return <>{children}</>;
